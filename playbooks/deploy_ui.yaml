@@ -1,0 +1,10 @@
+---
+- name: Configure and start UI
+  hosts: ui_servers
+  remote_user: campbelljlowman
+
+  tasks:
+    - name: Install Docker
+      ansible.builtin.package:
+        name: Docker
+        state: present
