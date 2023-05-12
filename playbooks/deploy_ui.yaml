@@ -6,5 +6,5 @@
   tasks:
     - name: Install Docker
       ansible.builtin.package:
-        name: Docker
+        name: docker
         state: present
