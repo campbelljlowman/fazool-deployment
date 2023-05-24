@@ -1,0 +1,18 @@
+---
+- name: Ensure docker is installed and running
+  hosts: all
+  remote_user: campbelljlowman
+
+  tasks:
+    - name: Ensure Docker is installed
+      ansible.builtin.package:
+        name: docker
+        state: present
+      become: true
+
+    # - name: Ensure Docker deamon is running
+    #   ansible.builtin.systemd:
+    #     state: started
+    #     service: docker
+    #     daemon_reload: true
+    #   become: true

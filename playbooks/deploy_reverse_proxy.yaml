@@ -1,6 +1,6 @@
 ---
-- name: Deploy UI server
-  hosts: ui_servers
+- name: Deploy reverse proxy server
+  hosts: reverse_proxy_servers
   remote_user: campbelljlowman
   vars:
     ghcr_username: "campbelljlowman"
@@ -14,18 +14,14 @@
         username: "{{ ghcr_username }}"
         password: "{{ ghcr_password }}"
 
-    - name: Ensure latest version of UI image is running
+    - name: Ensure latest version of reverse proxy image is running
       community.docker.docker_container:
-        image: ghcr.io/campbelljlowman/fazool-ui:0.1.0
-        name: fazool-ui
+        image: ghcr.io/campbelljlowman/fazool-reverse-proxy:0.1.0
+        name: fazool-reverse-proxy
         pull: true
         state: started
-        env:
-          VITE_BACKEND_HTTP_SERVER: http://localhost:5173
-          VITE_GRAPHQL_HTTP_SERVER: http://localhost:8080/query
-          VITE_GRAPHQL_WS_SERVER: ws://localhost:8080/query
-        ports:
-          - "5173:80"
+        published_ports:
+          - "80:80"
 
     - name: Log out of container repository
       community.docker.docker_login:

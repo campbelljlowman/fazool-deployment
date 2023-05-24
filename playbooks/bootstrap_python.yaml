@@ -1,5 +1,5 @@
 ---
-- name: Install python if not present
+- name: Ensure python is installed
   hosts: all
   remote_user: campbelljlowman
   gather_facts: false
