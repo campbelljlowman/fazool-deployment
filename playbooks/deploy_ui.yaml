@@ -20,10 +20,6 @@
         name: fazool-ui
         pull: true
         state: started
-        env:
-          VITE_BACKEND_HTTP_SERVER: http://localhost:5173
-          VITE_GRAPHQL_HTTP_SERVER: http://localhost:8080/query
-          VITE_GRAPHQL_WS_SERVER: ws://localhost:8080/query
         ports:
           - "5173:80"
 

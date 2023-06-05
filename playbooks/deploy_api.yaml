@@ -1,0 +1,45 @@
+---
+- name: Deploy API server
+  hosts: api_servers
+  remote_user: campbelljlowman
+  vars:
+    ghcr_username: "campbelljlowman"
+    ghcr_password: "{{ lookup('env','GITHUB_ACCESS_TOKEN') }}"
+    spotify_id: "{{ lookup('env','SPOTIFY_ID') }}"
+    spotify_secret: "{{ lookup('env','SPOTIFY_SECRET') }}"
+    jwt_secret_key: "{{ lookup('env','JWT_SECRET_KEY') }}"
+    postgres_url: "{{ lookup('env','POSTGRES_URL') }}"
+    log_level: "{{ lookup('env','API_LOG_LEVEL') }}"
+
+
+  tasks:
+    - name: Login to container repository
+      community.docker.docker_login:
+        registry_url: ghcr.io
+        username: "{{ ghcr_username }}"
+        password: "{{ ghcr_password }}"
+
+    - name: Ensure latest version of API image is running
+      community.docker.docker_container:
+        image: ghcr.io/campbelljlowman/fazool-api:0.1.0
+        name: fazool-api
+        pull: true
+        state: started
+        env:
+          SPOTIFY_ID: "{{ spotify_id }}"
+          SPOTIFY_SECRET: "{{ spotify_secret }}"
+          JWT_SECRET_KEY: "{{ jwt_secret_key }}"
+          POSTGRES_URL: "{{ postgres_url }}"
+          LOG_LEVEL: "{{ log_level }}"
+        ports:
+          - "8080:8080"
+
+    - name: Log out of container repository
+      community.docker.docker_login:
+        state: absent
+
+    # - name: Wait for container to start
+    #   ansible.builtin.wait_for:
+    #     host: localhost
+    #     port: 5713
+    #     timeout: 10
