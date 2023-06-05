@@ -6,3 +6,6 @@ deploy-ui:
 
 deploy-reverse-proxy:
 	ansible-playbook -v -i inventory.ini playbooks/deploy_reverse_proxy.yaml
+
+deploy-postgres:
+		ansible-playbook -v -i inventory.ini playbooks/deploy_postgres_docker.yaml

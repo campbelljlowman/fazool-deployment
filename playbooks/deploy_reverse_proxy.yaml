@@ -20,7 +20,7 @@
         name: fazool-reverse-proxy
         pull: true
         state: started
-        published_ports:
+        ports:
           - "80:80"
 
     - name: Log out of container repository

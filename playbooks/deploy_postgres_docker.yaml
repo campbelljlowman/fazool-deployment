@@ -1,0 +1,20 @@
+- name: Deploy Postgresql docker container
+  hosts: database_servers
+  remote_user: campbelljlowman
+  
+
+  tasks:
+    - name: Ensure postgres container is running
+      community.docker.docker_container:
+        name: fazool-postgres
+        image: postgres
+        state: started
+        ports:
+          - "5432:5432"
+        volumes:
+          - /home/fazool_postgres_data:/var/lib/postgresql/data
+        env:
+          POSTGRES_USER: "clowman"
+          POSTGRES_PASSWORD: "asdf"
+          POSTGRES_DB: "fazool"
+          POSTGRES_HOST: "postgres"
