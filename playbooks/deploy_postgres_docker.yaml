@@ -1,7 +1,7 @@
 - name: Deploy Postgresql docker container
   hosts: database_servers
   remote_user: campbelljlowman
-  
+
 
   tasks:
     - name: Ensure postgres container is running
