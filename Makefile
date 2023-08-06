@@ -2,7 +2,7 @@ include .env
 export
 
 ssh:
-	ssh campbelljlowman@35.196.200.103
+	ssh campbelljlowman@34.138.233.176
 	
 ping:
 	ansible all -i inventory.ini --user campbelljlowman -m ping
