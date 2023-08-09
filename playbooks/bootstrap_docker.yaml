@@ -3,6 +3,7 @@
   hosts: all
   remote_user: campbelljlowman
 
+# Google VMs seem to come with docker install with snap by default. This seems to cause issues
   tasks:
     - name: Ensure Docker is installed
       ansible.builtin.package:
