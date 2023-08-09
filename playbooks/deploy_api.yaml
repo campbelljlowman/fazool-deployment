@@ -10,6 +10,9 @@
     jwt_secret_key: "{{ lookup('env','JWT_SECRET_KEY') }}"
     postgres_url: "{{ lookup('env','POSTGRES_URL') }}"
     log_level: "{{ lookup('env','API_LOG_LEVEL') }}"
+    stripe_key: "{{ lookup('env', 'STRIPE_KEY') }}"
+    stripe_webhook_endpoint_secret: "{{ lookup('env', 'STRIPE_WEBHOOK_ENDPOINT_SECRET') }}"
+    frontend_domain: "{{ lookup('env', 'FRONTEND_DOMAIN') }}"
 
 
   tasks:
@@ -31,6 +34,9 @@
           JWT_SECRET_KEY: "{{ jwt_secret_key }}"
           POSTGRES_URL: "{{ postgres_url }}"
           LOG_LEVEL: "{{ log_level }}"
+          STRIPE_KEY: "{{ stripe_key }}"
+          STRIPE_WEBHOOK_ENDPOINT_SECRET: "{{ stripe_webhook_endpoint_secret }}"
+          FRONTEND_DOMAIN: "{{ frontend_domain }}"
         ports:
           - "8080:8080"
 
