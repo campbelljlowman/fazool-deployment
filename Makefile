@@ -18,3 +18,6 @@ deploy-postgres:
 
 deploy-api:
 	ansible-playbook -v -i inventory.ini playbooks/deploy_api.yaml
+
+deploy-uptime-monitor:
+	ansible-playbook -v -i inventory.ini playbooks/deploy_uptime_monitor.yaml

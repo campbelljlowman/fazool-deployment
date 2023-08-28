@@ -1,0 +1,44 @@
+---
+- name: Deploy uptime monutor server
+  hosts: uptime_monitor_servers
+  remote_user: campbelljlowman
+  vars:
+    ghcr_username: "campbelljlowman"
+    ghcr_password: "{{ lookup('env','GITHUB_ACCESS_TOKEN') }}"
+    smtp_server_port: "{{ lookup('env','SMTP_SERVER_PORT') }}"
+    smtp_server_domain: "{{ lookup('env','SMTP_SERVER_DOMAIN') }}"
+    source_email_address: "{{ lookup('env','SOURCE_EMAIL_ADDRESS') }}"
+    source_email_password: "{{ lookup('env','SOURCE_EMAIL_PASSWORD') }}"
+
+
+  tasks:
+    - name: Login to container repository
+      community.docker.docker_login:
+        registry_url: ghcr.io
+        username: "{{ ghcr_username }}"
+        password: "{{ ghcr_password }}"
+
+    - name: Copy local JSON file to remote
+      ansible.builtin.copy:
+        src: ../destination_email_addresses.json
+        dest: /tmp/destination_email_addresses.json
+        mode: preserve
+
+    - name: Ensure latest version of uptime monitor image is running
+      community.docker.docker_container:
+        image: ghcr.io/campbelljlowman/fazool-uptime-monitor:0.1.0
+        name: fazool-uptime-monitoring
+        pull: true
+        state: started
+        env:
+          SMTP_SERVER_PORT: "{{ smtp_server_port }}"
+          SMTP_SERVER_DOMAIN: "{{ smtp_server_domain }}"
+          SOURCE_EMAIL_ADDRESS: "{{ source_email_address }}"
+          SOURCE_EMAIL_PASSWORD: "{{ source_email_password }}"
+        volumes:
+          - /tmp/destination_email_addresses.json:/app/destination_email_addresses.json
+
+
+    - name: Log out of container repository
+      community.docker.docker_login:
+        state: absent

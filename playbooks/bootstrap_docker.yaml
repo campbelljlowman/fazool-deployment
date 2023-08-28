@@ -7,7 +7,7 @@
   tasks:
     - name: Ensure Docker is installed
       ansible.builtin.package:
-        name: docker
+        name: docker.io
         state: present
       become: true
 
