@@ -13,6 +13,10 @@
     stripe_key: "{{ lookup('env', 'STRIPE_KEY') }}"
     stripe_webhook_endpoint_secret: "{{ lookup('env', 'STRIPE_WEBHOOK_ENDPOINT_SECRET') }}"
     frontend_domain: "{{ lookup('env', 'FRONTEND_DOMAIN') }}"
+    smtp_server_port: "{{ lookup('env','SMTP_SERVER_PORT') }}"
+    smtp_server_domain: "{{ lookup('env','SMTP_SERVER_DOMAIN') }}"
+    source_email_address: "{{ lookup('env','SOURCE_EMAIL_ADDRESS') }}"
+    source_email_password: "{{ lookup('env','SOURCE_EMAIL_PASSWORD') }}"
 
 
   tasks:
@@ -37,6 +41,10 @@
           STRIPE_KEY: "{{ stripe_key }}"
           STRIPE_WEBHOOK_ENDPOINT_SECRET: "{{ stripe_webhook_endpoint_secret }}"
           FRONTEND_DOMAIN: "{{ frontend_domain }}"
+          SMTP_SERVER_TLS_PORT: "{{ smtp_server_port }}"
+          SMTP_SERVER_DOMAIN: "{{ smtp_server_domain }}"
+          SOURCE_EMAIL_ADDRESS: "{{ source_email_address }}"
+          SOURCE_EMAIL_PASSWORD: "{{ source_email_password }}"
         ports:
           - "8080:8080"
 
